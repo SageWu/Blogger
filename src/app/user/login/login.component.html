@@ -1,0 +1,23 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-12">
+			<div class="window-container">
+				<div class="top-bar">
+					<div class="window-buttons">
+						<ul>
+							<li></li>
+							<li></li>
+							<li></li>
+						</ul>
+					</div>
+					<div class="window-title">
+						<span>Terminal</span>
+					</div>
+				</div>
+				<div class="terminal-body" #terminalBody>
+					<p *ngFor="let message of messages; let is_last = last">{{message}}<span *ngIf="is_last" id="qlirus" class="animated fadeIn"></span></p>
+				</div>
+			</div>	
+		</div>
+	</div>
+</div>
