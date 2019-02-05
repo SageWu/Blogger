@@ -1,1 +1,139 @@
 /* You can add global styles to this file, and also import other style files */
+
+// sidebar colors
+$sidebar: #23282d;
+$sidebar-text: #ffffff;
+$sidebar-sublist: #32373c;
+$sidebar-border: #101920;
+
+// color scheme
+$primary: #017170 !default;
+$info: #3498db !default;
+$success: #287562 !default;
+$warning: #f39c12 !default;
+$danger: #e74c3c !default;
+
+@-webkit-keyframes spin {
+    0% {
+        transform: rotate(0deg); /* Firefox 16+, IE 10+, Opera */
+    }
+    100% {
+        transform: rotate(360deg); /* Firefox 16+, IE 10+, Opera */
+    }
+}
+@-moz-keyframes spin {
+    0% {
+        -moz-transform: rotate(0deg); /* Firefox 16+*/
+    }
+    100% {
+        -moz-transform: rotate(360deg); /* Firefox 16+*/
+    }
+}
+@keyframes spin {
+    0% {
+        transform: rotate(0deg); /* Firefox 16+, IE 10+, Opera */
+    }
+    100% {
+        transform: rotate(360deg); /* Firefox 16+, IE 10+, Opera */
+    }
+}
+
+@keyframes bg-img-before {
+    0% {
+        transform: translate3d(0%, 0%, 0);
+    }
+    50% {
+        transform: translate3d(0%, -100%, 0);
+    }
+    100% {
+        transform: translate3d(0%, 0%, 0);
+    }
+}
+@keyframes bg-img-after {
+    0% {
+        transform: translate3d(0%, 0%, 0) scale(1, -1);
+    }
+    50% {
+        transform: translate3d(0%, -100%, 0) scale(1, -1);
+    }
+    100% {
+        transform: translate3d(0%, 0%, 0) scale(1, -1);
+    }
+}
+
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1003;
+    background: $sidebar-sublist;
+
+    &:before,
+    &:after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("/assets/img/preloader.jpg");
+        background-repeat: repeat;
+        background-size: cover;
+        opacity: 0.3;
+        transition: transform .1s;
+    }
+
+    &:before {
+        top: 0;
+        animation: bg-img-before 40s linear infinite;
+    }
+
+    &:after {
+        top: 100%;
+        transform: scale(1, -1);
+        animation: bg-img-after 40s linear infinite;
+    }
+
+    & > div {
+        display: block;
+        position: relative;
+        left: 50%;
+        top: 50%;
+        width: 150px;
+        height: 150px;
+        margin: -75px 0 0 -75px;
+        border-radius: 50%;
+        box-shadow: 0 5px 5px 0 $danger!important;
+        transform: translate3d(0, 0, 0);
+        animation: spin 2s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+
+        &:before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border-radius: 50%;
+            box-shadow: 0 5px 5px 0 $primary!important;
+            -webkit-animation: spin 3s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
+            animation: spin 3s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+        }
+
+        &:after {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border-radius: 50%;
+            box-shadow: 0 5px 5px 0 $warning!important;
+            animation: spin 1.5s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+        }
+    }
+}

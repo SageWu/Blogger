@@ -1,0 +1,39 @@
+<div class="bg"></div>
+<div class="container-fluid" (scroll)="onScroll($event)">
+    <header #header>
+        <h1 class="logo">Blooger</h1>
+    </header>
+
+    <nav #nav>
+        <ul [ngClass]="{ reveal: toggle_menu }">
+            <li class="nav-item"><a routerLink="/user/home" >首页</a></li>
+            <li class="nav-item"><a routerLink="/user/home/recommend" >个性推荐</a></li>
+            <li class="nav-item"><a routerLink="/user/back">我的博客</a></li>
+            <li class="nav-item"><a href="#" >个人中心</a></li>
+        </ul>
+        <div class="menu-bar" (click)="revealMenu()">
+            菜单
+            <span class="hamburger-icon"><i class="fa fa-bars"></i></span>
+        </div>
+    </nav>
+
+    <div class="container" #container>
+        <div class="section">
+            <div class="col span_2_of_3">
+                <router-outlet></router-outlet>
+            </div>
+            
+            <aside class="col span_1_of_3">
+                <div class="side-post">
+                    <p class="side-content">Ultricies lacus et, non orci gravida purus augue integer, sed turpis. Erat dapibus. 						Eleifend massa scelerisque, aenean penatibus laoreet ut in.</p>
+                    <a href="#" class="button">Subscribe!</a>
+                </div>
+                <div class="side-post">
+                    <img src="http://placehold.it/800x400&text=img" alt="img">
+                    <p class="side-content">Ut noster tractavissent, summis hic eiusmod te quem. Doctrina velit litteris eu eu fore ingeniis philosophari ne quid o ingeniis ne anim, illum ea iudicem. Pariatur duis dolor hic dolor ad vidisse amet elit ita summis, quo duis te malis.</p>
+                </div>
+            </aside>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+</div>

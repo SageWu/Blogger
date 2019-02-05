@@ -7,12 +7,14 @@ import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
 
 import { UserService } from './services/user.service';
+import { PreloaderService } from './services/preloader.service';
 
 @NgModule({
     imports: [
         HttpClientModule
     ],
     providers: [
+        PreloaderService,
         UserService
     ]
 })
