@@ -15,13 +15,14 @@ export class HomeComponent {
     @ViewChild("container") container_ref: ElementRef;
     public toggle_menu: boolean = false;
 
+    //监听滚动事件
     public onScroll(event: Event) {
         let parent: EventTarget = event.target;
         let header: HTMLElement = this.header_ref.nativeElement;
         let nav: HTMLElement = this.nav_ref.nativeElement;
         let container: HTMLElement = this.container_ref.nativeElement;
 
-        if(parent["scrollTop"] > header.clientHeight) {
+        if(parent["scrollTop"] > header.clientHeight) { //将导航栏固定在顶部
             nav.style.position = "fixed";
             nav.style.top = "0px";            
             container.style.marginTop = nav.clientHeight + "px";
@@ -32,9 +33,8 @@ export class HomeComponent {
         }
     }
 
+    //moblie 显示导航栏
     public revealMenu() {
         this.toggle_menu = !this.toggle_menu;
-        console.log(this.toggle_menu);
-        
     }
 }

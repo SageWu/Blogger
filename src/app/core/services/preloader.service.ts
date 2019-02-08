@@ -1,6 +1,6 @@
 /**
- * @file
- * @module
+ * @file 加载页面控制服务
+ * @module app/core/services/preloader/service
  */
 
 import { Injectable, Inject } from "@angular/core";
@@ -19,12 +19,17 @@ export class PreloaderService {
     }
 
     public start(): void {
-        this.preloader.classList.add('.' + PRELOADER_NAME);
+        requestAnimationFrame(() => {
+            this.preloader.classList.toggle(PRELOADER_NAME);
+        });
     }
 
     public stop(): void {
-        this.preloader.classList.remove('.' + PRELOADER_NAME);
-        console.log(this.preloader);
-        this.preloader.className = "";
+        requestAnimationFrame(() => {
+            this.preloader.style.opacity = "0"; //渐渐消失
+            setTimeout(() => {
+                this.preloader.classList.toggle(PRELOADER_NAME);
+            }, 1000);
+        });
     }
 }
