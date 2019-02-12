@@ -6,4 +6,5 @@ import { Component, Input, ViewEncapsulation } from "@angular/core";
 })
 export class CardComponent {
     @Input() title: string;
+    @Input() cardClass: string;
 }

@@ -18,7 +18,7 @@ $hover: 24;
 }
 
 .btn:hover {
-    transform: scale(1.2);
+    //transform: scale(1.2);
 }
 
 @mixin styleButton($color, $borderColor) {
@@ -205,7 +205,7 @@ button.btn.btn-inverse {
     @include buttonGroupColor($warning);
   }
   .dropdown-menu {
-    // margin-top: 0px;
+    margin-top: 0px;
   }
 }
 

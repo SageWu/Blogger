@@ -14,3 +14,5 @@ export const AUTH_CHECK: string = HOST + "/auth/check";
 
 export const USER: string = HOST + "/user";
 export const USER_EXIST: string = HOST + "/user/exist";
+
+export const TAG: string = HOST + "/tag";

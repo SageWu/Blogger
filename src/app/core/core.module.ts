@@ -8,6 +8,8 @@ import { HttpClientModule } from "@angular/common/http";
 
 import { UserService } from './services/user.service';
 import { PreloaderService } from './services/preloader.service';
+import { HttpService } from './services/http.service';
+import { TagService } from './services/tag.service';
 
 @NgModule({
     imports: [
@@ -15,7 +17,9 @@ import { PreloaderService } from './services/preloader.service';
     ],
     providers: [
         PreloaderService,
-        UserService
+        HttpService,
+        UserService,
+        TagService
     ]
 })
 export class CoreModule {}
