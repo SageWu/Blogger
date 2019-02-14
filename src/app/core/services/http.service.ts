@@ -4,10 +4,10 @@
  */
 
 import { Injectable } from "@angular/core";
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 
-import { HttpResponse, HttpSuccessResponse, HttpErrorResponse, Token } from "@app/interfaces/http.interface";
+import { HttpResponse, HttpSuccessResponse, HttpErrorResponse, Token, HttpRequestOption } from "@app/interfaces/http.interface";
 import * as HTTP from "@app/constants/http.constant";
 
 @Injectable()
@@ -50,5 +50,17 @@ export class HttpService {
         }
 
         return;
+    }
+
+    //转为HttpParams
+    public handleOption(option: HttpRequestOption): HttpParams {
+        let name: string;
+        let params: HttpParams = new HttpParams();
+
+        for(name in option) {
+            params = params.set(name, option[name].toString());
+        }
+
+        return params;
     }
 }

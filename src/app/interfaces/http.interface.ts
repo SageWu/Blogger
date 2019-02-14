@@ -18,6 +18,17 @@ export type HttpErrorResponse = HttpResponseBase & { reason?: string };
 //响应
 export type HttpResponse<T> = HttpSuccessResponse<T> | HttpErrorResponse;
 
+//分页数据
+export interface PaginationData<T> {
+    data?: T;
+    total?: number;
+}
+
+//请求选项
+export interface HttpRequestOption {
+    [key: string]: string | number;
+}
+
 //token
 export interface Token {
     accessToken: string;
