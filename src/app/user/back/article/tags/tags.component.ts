@@ -100,7 +100,7 @@ export class TagsComponent implements OnInit {
         this.fetching = true;
 
         this.tagService.get(option).subscribe(
-            (tags: Tag[]) => {                
+            (tags: Tag[]) => {
                 this.tags = tags;
                 this.fetching = false;
                 this.selected_tags = [];
@@ -127,9 +127,9 @@ export class TagsComponent implements OnInit {
         this.tagService.create(tag).subscribe(
             (tag: Tag) => {
                 if(tag) {
-                    this.getTags(this.option);
                     this.resetEditForm();
                     this.resetSearchForm();
+                    this.refreshTags();
                 }
                 else {  //创建标签失败
                     //todo
@@ -145,9 +145,9 @@ export class TagsComponent implements OnInit {
         this.tagService.update(tag).subscribe(
             (tag: Tag) => {
                 if(tag) {
-                    this.refreshTags();
                     this.resetEditForm();
                     this.active_tag = null;
+                    this.refreshTags();
                 }
                 else {  //修改失败
                     //todo
@@ -158,12 +158,33 @@ export class TagsComponent implements OnInit {
 
     //删除标签
     public deleteTag(): void {
-
+        this.tagService.delete(this.active_tag._id).subscribe(
+            (result: boolean) => {
+                if(result) {
+                    this.cancelModal();
+                    this.active_tag = null;
+                    this.refreshTags();
+                }
+                else {  //删除失败
+                    this.cancelModal();
+                }
+            }
+        );
     }
 
     //批量删除标签
     public deleteTags(): void {
-
+        this.tagService.deleteTags(this.selected_tags).subscribe(
+            (results: boolean[]) => {
+                if(results.length > 0) {
+                    this.cancelModal();
+                    this.refreshTags();
+                }
+                else {  //删除失败
+                    this.cancelModal();
+                }
+            }
+        );
     }
 
     //打开确认删除modal

@@ -5,7 +5,7 @@
 
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { switchMap, catchError, map } from 'rxjs/operators';
 
 import * as API from "@app/constants/api.constant";
@@ -61,5 +61,22 @@ export class TagService {
     }
 
     //删除标签
-    
+    public delete(tag_id: string): Observable<boolean> {
+        this.httpService.checkRequestCondition();
+        let url: string = API.TAG + "/" + tag_id;
+        
+        return this.http.delete<HttpResponse<boolean>>(url, { headers: this.httpService.headers }).pipe(
+            switchMap(this.httpService.handleResponse),
+            catchError(this.httpService.handleError<boolean>(false))
+        );
+    }
+
+    public deleteTags(tag_ids: string[]): Observable<boolean[]> {
+        this.httpService.checkRequestCondition();
+
+        return this.http.request<HttpResponse<boolean[]>>("delete", API.TAG, { headers: this.httpService.headers, body: tag_ids }).pipe(
+            switchMap(this.httpService.handleResponse),
+            catchError(this.httpService.handleError<boolean[]>([]))
+        );
+    }
 }
