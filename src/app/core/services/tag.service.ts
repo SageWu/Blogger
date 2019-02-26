@@ -71,12 +71,13 @@ export class TagService {
         );
     }
 
-    public deleteTags(tag_ids: string[]): Observable<boolean[]> {
+    //批量删除
+    public deleteTags(tag_ids: string[]): Observable<boolean> {
         this.httpService.checkRequestCondition();
 
-        return this.http.request<HttpResponse<boolean[]>>("delete", API.TAG, { headers: this.httpService.headers, body: tag_ids }).pipe(
+        return this.http.request<HttpResponse<boolean>>("delete", API.TAG, { headers: this.httpService.headers, body: tag_ids }).pipe(
             switchMap(this.httpService.handleResponse),
-            catchError(this.httpService.handleError<boolean[]>([]))
+            catchError(this.httpService.handleError<boolean>(false))
         );
     }
 }

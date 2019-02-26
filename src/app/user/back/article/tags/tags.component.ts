@@ -56,13 +56,16 @@ export class TagsComponent implements OnInit {
     }
 
     //多选
-    public batchSelectChange(event): void {
-        //todo
+    public batchSelectChange(is_select: boolean): void {
+        this.tags.forEach((tag: Tag) => tag["selected"] = is_select);
+        this.selected_tags = is_select? this.tags.map((tag: Tag) => tag._id): [];
+        this.select_all = this.selected_tags.length === this.tags.length;
     }
 
     //单选
     public itemSelectChange(): void {
-        //todo
+        this.selected_tags = this.tags.filter((tag: Tag) => tag["selected"]).map((tag: Tag) => tag._id);
+        this.select_all = this.selected_tags.length === this.tags.length;
     }
 
     //选择要修改的tag，并映射到表单
@@ -175,8 +178,8 @@ export class TagsComponent implements OnInit {
     //批量删除标签
     public deleteTags(): void {
         this.tagService.deleteTags(this.selected_tags).subscribe(
-            (results: boolean[]) => {
-                if(results.length > 0) {
+            (results: boolean) => {
+                if(results) {
                     this.cancelModal();
                     this.refreshTags();
                 }
