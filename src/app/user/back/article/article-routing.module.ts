@@ -12,7 +12,8 @@ import { TagsComponent } from './tags/tags.component';
 import { PostComponent } from './post/post.component';
 
 const user_back_article_routes: Routes = [
-    { path: "", component: ArticlesComponent },
+    { path: "", redirectTo: "list", pathMatch: "full" },
+    { path: "list", component: ArticlesComponent },
     { path: "categories", component: CategoriesComponent },
     { path: "tags", component: TagsComponent },
     { path: "post", component: PostComponent }

@@ -1,0 +1,170 @@
+<div class="row" class="header">
+	<div class="col">
+		<h3>标签管理</h3>
+	</div>
+</div>
+<div class="row">
+    <div class="col-md-4 col-xs-12">
+        <app-card title="添加分类" baCardClass="with-scroll">
+            <form name="addCatrgory" class="category-edit-form" [formGroup]="edit_form" (ngSubmit)="submitEditForm()">
+                <div class="form-group" [ngClass]="controlStateClass(edit_form.controls['name'])">
+                    <label for="name"><h5>名称</h5></label>
+                    <input type="text" class="form-control" id="name" placeholder="分类名称" formControlName="name">
+                    <span class="help-block sub-little-text">这将是它在站点上显示的名字</span>
+                </div>
+                <div class="form-group" [ngClass]="controlStateClass(edit_form.controls['parent_id'])">
+                    <label for="parent_id"><h5>父分类</h5></label>
+                    <select class="form-control c-select" id="parent_id" formControlName="parent_id">
+                        <option [ngValue]="null">无</option>
+                        <ng-template [ngIf]="categories && categories.length">
+                            <option *ngFor="let category of categories" [ngValue]="category._id" [disabled]="isDisableCateSelect(category)">
+                                <span *ngIf="category.level">└</span>
+                                <span>{{ ''.padEnd(category.level, '─') }}</span>
+                                <span>&nbsp;</span>
+                                <span>{{ category.name }}</span>
+                            </option>
+                        </ng-template>
+                    </select>
+                    <span class="help-block sub-little-text">可以选择父级分类</span>
+                </div>
+                <div class="form-group" [ngClass]="controlStateClass(edit_form.controls['description'])">
+                    <label for="description"><h5>描述</h5></label>
+                    <textarea id="description" class="form-control category-description" cols="30" rows="20" placeholder="分类描述" formControlName="description">
+                    </textarea>
+                    <span class="help-block sub-little-text">该分类的描述</span>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-success btn-with-icon" [disabled]="!edit_form.valid || fetching">
+                            <i class="fa fa-check"></i>
+                            <span *ngIf="fetching">分类{{ category ? '修改' : '添加' }}中</span>
+                            <span *ngIf="!fetching">{{ category ? '修改' : '添加' }}分类目录</span>
+                        </button>
+                        <span>&nbsp;&nbsp;</span>
+                        <button class="btn btn-default btn-with-icon" (click)="resetEditForm()">
+                            <i class="fa fa-refresh"></i>
+                            <span>重置</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </app-card>
+    </div>
+
+	<div class="col-md-8 col-xs-12">
+		<app-card title="分类管理" baCardClass="with-scroll">
+			<div class="clearfix">
+				<div class="pull-left">
+					<div class="btn-group" role="group" aria-label="Basic example">
+						<button type="button" class="btn btn-default btn-with-icon" (click)="refreshCategories()">
+							<i class="fa fa-refresh"></i>
+							<span>刷新</span>
+						</button>
+						<div class="btn-group dropdown">
+							<button type="button" class="btn btn-default  btn-with-icon dropdown-toggle" data-toggle="dropdown" [disabled]="!selected_categories.length">
+								<i class="fa fa-list"></i>
+								<span>批量操作</span>
+							</button>
+							<ul class="dropdown-menu">
+								<li class="dropdown-item">
+									<a [href]="" (click)="deleteCategoriesModal()">删除选中</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="table-responsive">
+				<div class="category-list">
+					<!-- <app-loading-spider [show]="fetching"></app-loading-spider> -->
+					<table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
+						<thead class="thead-inverse">
+							<tr>
+								<th class="batch-checkbox">
+									<app-checkbox [(ngModel)]="select_all" (ngModelChange)="batchSelectChange($event)">
+										<span app-checkbox-label>
+											<span>&nbsp;</span>
+											<strong>ID</strong>
+										</span>
+									</app-checkbox>
+								</th>
+								<th width="20%">名称</th>
+								<th width="30%">描述</th>
+								<th>文章</th>
+								<th width="30%" class="text-center">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngIf="!categories.length; else dataList">
+								<td colspan="7">
+									<p class="text-muted text-center category-err-msg">{{ fetching ? '数据请求中...' : '暂无数据' }}<p>
+								</td>
+							</tr>
+							<ng-template #dataList>
+								<tr *ngFor="let category of categories">
+									<td class="batch-checkbox">
+										<app-checkbox [(ngModel)]="category.selected" (ngModelChange)="itemSelectChange()">
+											<span app-checkbox-label>
+												<span>&nbsp;</span>
+												<strong>{{ category._id }}</strong>
+											</span>
+										</app-checkbox>
+									</td>
+									<td>
+										<!-- <strong *ngIf="category.unrepaired" class="text-warning">
+											<i class="fa fa-alert"></i>
+											<span>&nbsp;</span>
+										</strong> -->
+										<strong *ngIf="category.level">└</strong>
+										<strong>{{ ''.padEnd(category.level, '─') }}</strong>
+										<span>&nbsp;</span>
+										<strong>{{ category.name }}</strong>
+									</td>
+									<td class="category-description" title="{{ category.description }}">
+										<span [class.text-muted]="!category.description">{{ category.description || '暂无描述' }}</span>
+									</td>
+									<td>
+										{{ category.count || 0 }}
+									</td>
+									<td>
+										<div class="text-center">
+											<div class="btn-group" role="group" aria-label="Basic example">
+												<button type="button" class="btn btn-sm btn-warning" (click)="putCategory(category)">编辑分类</button>
+												<button type="button" class="btn btn-sm btn-danger"  (click)="deleteCategoryModal(category)">删除分类</button>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</ng-template>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</app-card>
+	</div>
+
+	<!-- 删除确认弹窗 -->
+	<ng-template #deleteModal>
+		<div class="modal-header">
+			<h4 class="modal-title">确认操作</h4>
+			<button class="close" aria-label="Close" (click)="cancelModal()">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<div class="message">
+				<span class="icon text-warning">
+					<i class="fa fa-information"></i>
+				</span>
+				<span>确定要删除{{ category ? '这个' : '选中' }}分类吗？</span>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-primary confirm-btn" (click)="(category ? deleteCategory() : deleteCategories())">确认删除</button>
+			<span>&nbsp;</span>
+			<button class="btn btn-default confirm-btn" (click)="cancelModal()">取消</button>
+		</div>
+	</ng-template>
+</div>

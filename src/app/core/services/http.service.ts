@@ -4,14 +4,19 @@
  */
 
 import { Injectable } from "@angular/core";
-import { HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 
-import { HttpResponse, HttpSuccessResponse, HttpErrorResponse, Token, HttpRequestOption } from "@app/interfaces/http.interface";
+import { HttpResponse, HttpSuccessResponse, HttpErrorResponse, Token, HttpRequestOption, PaginationData } from "@app/interfaces/http.interface";
 import * as HTTP from "@app/constants/http.constant";
+import { switchMap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class HttpService {
+    constructor(
+        private http: HttpClient
+    ) {}
+
     //初始token和headers
     public token: Token;
     public headers: HttpHeaders = new HttpHeaders({ "Content-Type": "application/json; charset=utf-8" });
@@ -62,5 +67,52 @@ export class HttpService {
         }
 
         return params;
+    }
+
+    public get<T>(api: string, option: HttpRequestOption): Observable<PaginationData<T[]>> {
+        this.checkRequestCondition();
+        let params: HttpParams = this.handleOption(option);
+
+        return this.http.get<HttpResponse<PaginationData<T[]>>>(api, { headers: this.headers, params: params }).pipe(
+            switchMap(this.handleResponse),
+            catchError(this.handleError<PaginationData<T[]>>(null))
+        );
+    }
+
+    public create<T>(api: string, data: T): Observable<T> {
+        this.checkRequestCondition();
+
+        return this.http.post<HttpResponse<T>>(api, data, { headers: this.headers }).pipe(
+            switchMap(this.handleResponse),
+            catchError(this.handleError<T>(null))
+        );
+    }
+
+    public update<T>(api: string, data: T): Observable<T> {
+        this.checkRequestCondition();
+
+        return this.http.put<HttpResponse<T>>(api, data, { headers: this.headers }).pipe(
+            switchMap(this.handleResponse),
+            catchError(this.handleError<T>(null))
+        );
+    }
+
+    public delete(api: string, id: string): Observable<boolean> {
+        this.checkRequestCondition();
+        let url: string = api + "/" + id;
+        
+        return this.http.delete<HttpResponse<boolean>>(url, { headers: this.headers }).pipe(
+            switchMap(this.handleResponse),
+            catchError(this.handleError<boolean>(false))
+        );
+    }
+
+    public deleteMany(api: string, ids: string[]): Observable<boolean> {
+        this.checkRequestCondition();
+
+        return this.http.request<HttpResponse<boolean>>("delete", api, { headers: this.headers, body: ids }).pipe(
+            switchMap(this.handleResponse),
+            catchError(this.handleError<boolean>(false))
+        );
     }
 }

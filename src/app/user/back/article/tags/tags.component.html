@@ -1,3 +1,8 @@
+<div class="row" class="header">
+	<div class="col">
+		<h3>标签管理</h3>
+	</div>
+</div>
 <div class="row">
     <div class="col-md-4 col-xs-12">
         <app-card title="添加标签" cardClass="with-scroll">
@@ -44,7 +49,7 @@
 						</button>
 						<div class="btn-group dropdown">
 							<button type="button" class="btn btn-default btn-with-icon dropdown-toggle" data-toggle="dropdown" [disabled]="!selected_tags.length">
-								<i class="ion-md-list"></i>
+								<i class="fa fa-list"></i>
 								<span>批量操作</span>
 							</button>
 							<ul class="dropdown-menu">
@@ -125,23 +130,23 @@
 						</tbody>
 					</table>
 					<br>
-					<!-- <div class="text-center" *ngIf="tags.pagination">
+					<div class="text-center pagination">
 						<pagination
-						class="pagination-xs"
-						firstText="首页"
-						lastText="末页"
-						nextText="下一页"
-						previousText="上一页"
-						pageBtnClass="btn-primary"
-						[totalItems]="tags.pagination.total"
-						[itemsPerPage]="tags.pagination.per_page"
-						[(ngModel)]="tags.pagination.current_page"
-						[maxSize]="7"
-						[boundaryLinks]="true"
-						[rotate]="false"
-						(pageChanged)="handlePageChanged($event)">
+							class="pagination-xs"
+							firstText="首页"
+							lastText="末页"
+							nextText="下一页"
+							previousText="上一页"
+							pageBtnClass="btn-primary"
+							[totalItems]="total"
+							[itemsPerPage]="option.page_size"
+							[(ngModel)]="option.page"
+							[maxSize]="7"
+							[boundaryLinks]="true"
+							[rotate]="false"
+							(pageChanged)="pageChanged($event)">
 						</pagination>
-					</div> -->
+					</div>
 				</div>
 			</div>
 		</app-card>

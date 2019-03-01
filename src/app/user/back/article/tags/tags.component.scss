@@ -1,3 +1,7 @@
+.header {
+	padding: 10px 0px;
+}
+
 .tag-form {
     .tag-description {
         line-height: 1.8em;
@@ -25,7 +29,7 @@
 		}
     }
 }
-  
+
 .tag-list {
     position: relative;
 
@@ -64,6 +68,10 @@
 				}
 			}
 		}
-    }
+	}
+	.pagination {
+		display: flex;
+		justify-content: center;
+	}
 }
   

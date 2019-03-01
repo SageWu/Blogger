@@ -6,7 +6,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { ModalModule } from "ngx-bootstrap/modal";
+import { ModalModule, PaginationModule } from "ngx-bootstrap";
 
 import { ArticleRoutingModule } from './article-routing.module';
 import { ArticlesComponent } from './articles/articles.component';
@@ -16,19 +16,21 @@ import { PostComponent } from './post/post.component';
 import { ShareModule } from '@app/share/share.module';
 
 @NgModule({
-    declarations: [
-        ArticlesComponent,
-        CategoriesComponent,
-        TagsComponent,
-        PostComponent
-    ],
     imports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
         ModalModule.forRoot(),
+        PaginationModule.forRoot(),
+        
         ArticleRoutingModule,
         ShareModule
+    ],
+    declarations: [
+        ArticlesComponent,
+        CategoriesComponent,
+        TagsComponent,
+        PostComponent
     ]
 })
 export class ArticleModule {}

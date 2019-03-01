@@ -16,3 +16,5 @@ export const USER: string = HOST + "/user";
 export const USER_EXIST: string = HOST + "/user/exist";
 
 export const TAG: string = HOST + "/tag";
+
+export const CATEGORY: string = HOST + "/category";

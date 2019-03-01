@@ -11,6 +11,7 @@ import { formControlStateClass } from '@app/share/component.utils';
 import { Tag } from '@app/core/models/tag.model';
 import { TagService } from '@app/core/services/tag.service';
 import { HttpRequestOption } from '@app/interfaces/http.interface';
+import { LogService } from '@app/core/services/log.service';
 
 @Component({
     templateUrl: "./tags.component.html",
@@ -19,14 +20,15 @@ import { HttpRequestOption } from '@app/interfaces/http.interface';
 export class TagsComponent implements OnInit {
     controlStateClass = formControlStateClass;
 
-    public edit_form: FormGroup;    //编辑表单
-    public search_form: FormGroup;  //搜索表单
+    public edit_form: FormGroup;        //编辑表单
+    public search_form: FormGroup;      //搜索表单
 
-    public active_tag: Tag = null;  //选中的tag
-    public selected_tags: string[] = [];    //选中的tag的id
+    public active_tag: Tag = null;      //选中的tag
+    public selected_tags: string[] = [];//选中的tag的id
     public select_all: boolean = false; //是否全选
     public fetching: boolean = false;   //正在获取数据
-    public tags: Tag[] = [];
+    public tags: Tag[] = [];            //标签列表
+    public total: number = 0;           //标签总数
     public option: HttpRequestOption;   //获取标签请求选项
 
     @ViewChild("deleteModal") delete_modal: TemplateRef<any>;
@@ -35,7 +37,8 @@ export class TagsComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private modalService: BsModalService,
-        private tagService: TagService
+        private tagService: TagService,
+        private logService: LogService
     ) {
         this.edit_form = this.fb.group({
             name: ["",  Validators.compose([Validators.required])],
@@ -94,8 +97,9 @@ export class TagsComponent implements OnInit {
     }
 
     //分页跳转
-    public pageChanged(): void {
-        //todo
+    public pageChanged(event): void {
+        this.option.page = event.page;
+        this.refreshTags();
     }
 
     //获取标签
@@ -105,6 +109,7 @@ export class TagsComponent implements OnInit {
         this.tagService.get(option).subscribe(
             (tags: Tag[]) => {
                 this.tags = tags;
+                this.total = this.tagService.total;
                 this.fetching = false;
                 this.selected_tags = [];
                 this.select_all = false;
@@ -134,8 +139,8 @@ export class TagsComponent implements OnInit {
                     this.resetSearchForm();
                     this.refreshTags();
                 }
-                else {  //创建标签失败
-                    //todo
+                else {
+                    this.logService.notify("创建标签失败");
                 }
             }
         );
@@ -152,8 +157,8 @@ export class TagsComponent implements OnInit {
                     this.active_tag = null;
                     this.refreshTags();
                 }
-                else {  //修改失败
-                    //todo
+                else {
+                    this.logService.notify("修改标签失败");
                 }
             }
         );
@@ -170,6 +175,7 @@ export class TagsComponent implements OnInit {
                 }
                 else {  //删除失败
                     this.cancelModal();
+                    this.logService.notify("删除标签失败");
                 }
             }
         );
@@ -177,7 +183,7 @@ export class TagsComponent implements OnInit {
 
     //批量删除标签
     public deleteTags(): void {
-        this.tagService.deleteTags(this.selected_tags).subscribe(
+        this.tagService.deleteMany(this.selected_tags).subscribe(
             (results: boolean) => {
                 if(results) {
                     this.cancelModal();
@@ -185,6 +191,7 @@ export class TagsComponent implements OnInit {
                 }
                 else {  //删除失败
                     this.cancelModal();
+                    this.logService.notify("删除标签失败");
                 }
             }
         );
