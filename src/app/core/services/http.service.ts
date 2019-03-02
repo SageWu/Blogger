@@ -79,6 +79,15 @@ export class HttpService {
         );
     }
 
+    public getAll<T>(api: string): Observable<T[]> {
+        this.checkRequestCondition();
+
+        return this.http.get<HttpResponse<T[]>>(api, { headers: this.headers }).pipe(
+            switchMap(this.handleResponse),
+            catchError(this.handleError<T[]>([]))
+        );
+    }
+
     public create<T>(api: string, data: T): Observable<T> {
         this.checkRequestCondition();
 

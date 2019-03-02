@@ -37,6 +37,11 @@ export class TagService {
         );
     }
 
+    //获取所有标签
+    public getAll(): Observable<Tag[]> {
+        return this.httpService.getAll<Tag>(API.TAG_ALL);
+    }
+
     //创建标签
     public create(tag: Tag): Observable<Tag> {
         return this.httpService.create<Tag>(API.TAG, tag);

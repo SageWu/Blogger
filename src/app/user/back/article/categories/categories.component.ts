@@ -24,12 +24,12 @@ export class CategoriesComponent implements OnInit {
 
     public fetching: boolean = false;           //是否在获取数据
     public option: HttpRequestOption;           //查询选项
-    public total: number;
-    public categories: Category[] = [];         //
+    public total: number;                       //总记录数
+    public categories: Category[] = [];         //目录列表
 
-    public category: Category;                  //选中分类目录
-    public selected_categories: string[] = [];
-    public select_all: boolean;
+    public category: Category;                  //单个选中目录
+    public selected_categories: string[] = [];  //勾选的目录
+    public select_all: boolean;                 //是否选择全部
 
     @ViewChild("deleteModal") delete_modal: TemplateRef<any>;
     public modal_ref: BsModalRef;

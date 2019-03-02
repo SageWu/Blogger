@@ -1,0 +1,33 @@
+@import 'src/theme/sass/conf/conf';
+
+@import url('https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css');
+
+.editor-toolbar a.fa {
+    color: white !important;
+}
+
+.article-editor-main-form {
+    .article-tags {
+        .tags-list {
+            margin-top: .5em;
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+
+            .article-tag-item {
+                margin-right: .5rem;
+                margin-bottom: .5rem;
+            }
+        }
+    }
+
+    .article-description {
+        line-height: 1.8em;
+    } 
+
+    .article-content {
+        padding: 0;
+        line-height: inherit;
+    }
+}
