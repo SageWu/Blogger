@@ -19,3 +19,6 @@ export const TAG: string = HOST + "/tag";
 export const TAG_ALL: string = HOST + "/tag/all";
 
 export const CATEGORY: string = HOST + "/category";
+export const CATEGORY_ALL: string = HOST + "/category/all";
+
+export const ARTICLE: string = HOST + "/article";

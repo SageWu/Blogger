@@ -37,6 +37,11 @@ export class CategoryService {
         );
     }
 
+    //获取所有目录
+    public getAll(): Observable<Category[]> {
+        return this.httpService.getAll<Category>(API.CATEGORY_ALL);
+    }
+
     //创建文章目录
     public create(category: Category): Observable<Category> {
         return this.httpService.create<Category>(API.CATEGORY, category);

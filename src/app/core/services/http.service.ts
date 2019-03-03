@@ -14,7 +14,7 @@ import { switchMap, catchError } from 'rxjs/operators';
 @Injectable()
 export class HttpService {
     constructor(
-        private http: HttpClient
+        private http: HttpClient,
     ) {}
 
     //初始token和headers
@@ -69,6 +69,7 @@ export class HttpService {
         return params;
     }
 
+    //获取分页数据
     public get<T>(api: string, option: HttpRequestOption): Observable<PaginationData<T[]>> {
         this.checkRequestCondition();
         let params: HttpParams = this.handleOption(option);
@@ -79,6 +80,17 @@ export class HttpService {
         );
     }
 
+    //获取单个数据
+    public getOne<T>(api: string, id: string): Observable<T> {
+        this.checkRequestCondition();
+
+        return this.http.get<HttpResponse<T>>(api + "/" + id, { headers: this.headers }).pipe(
+            switchMap(this.handleResponse),
+            catchError(this.handleError<T>(null))
+        );
+    }
+
+    //获取所有数据
     public getAll<T>(api: string): Observable<T[]> {
         this.checkRequestCondition();
 
@@ -88,6 +100,7 @@ export class HttpService {
         );
     }
 
+    //创建
     public create<T>(api: string, data: T): Observable<T> {
         this.checkRequestCondition();
 
@@ -97,6 +110,7 @@ export class HttpService {
         );
     }
 
+    //更新
     public update<T>(api: string, data: T): Observable<T> {
         this.checkRequestCondition();
 
@@ -106,6 +120,7 @@ export class HttpService {
         );
     }
 
+    //删除
     public delete(api: string, id: string): Observable<boolean> {
         this.checkRequestCondition();
         let url: string = api + "/" + id;
@@ -116,6 +131,7 @@ export class HttpService {
         );
     }
 
+    //批量删除
     public deleteMany(api: string, ids: string[]): Observable<boolean> {
         this.checkRequestCondition();
 

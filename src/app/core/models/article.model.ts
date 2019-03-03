@@ -1,7 +1,10 @@
 /**
  * @file 文章模型接口
- * @module app/core/models/article/model
+ * @module app/core/article/model
  */
+
+import { Category } from './category.model';
+import { Tag } from './tag.model';
 
 //文章发布状态
 export enum PublishState {
@@ -24,4 +27,22 @@ export enum Origin {
     Original = 1,
     Reprint = 2,
     Hybrid = 3
+}
+
+//文章模型
+export interface Article {
+    title: string;
+    content: string;
+    thumb?: string;
+    state: PublishState;
+    origin: Origin;
+    views: number;
+    likes: number;
+    comments_num: number;
+    create_at: Date;
+    update_at: Date;
+
+    user_id: string;
+    categories: Category[];
+    tags: Tag[];
 }

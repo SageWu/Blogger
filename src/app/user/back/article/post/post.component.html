@@ -42,42 +42,77 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row" [ngClass]="controlStateClass(edit_form.controls['content'])">
+                <div class="form-group row">
                     <label for="content" class="col-sm-1 form-control-label text-right">文章内容</label>
                     <div class="col-sm-10">
-                        <!-- <sa-markdown-editor
-                        class="form-control article-content"
-                        title="文章内容"
-                        [formControl]="formContent"
-                        (change)="handleContentChange($event)"
-                        ></sa-markdown-editor> -->
-
                         <textarea #simplemde></textarea>
                     </div>
                 </div>
             </form>
         </app-card>
     </div>
-    <!-- <div class="col-md-3">
-      <sa-card title="分类目录" baCardClass="with-scroll">
-        <box-article-edit-category [(category)]="article.category"></box-article-edit-category>
-      </sa-card>
-      <sa-card title="自定义扩展" baCardClass="with-scroll">
-        <box-article-edit-extend [(extends)]="article.extends"></box-article-edit-extend>
-      </sa-card>
-      <sa-card title="发布选项" baCardClass="with-scroll">
-        <box-article-edit-submit 
-          [isEdit]="!!article._id"
-          [(state)]="article.state"
-          [(origin)]="article.origin"
-          [(ppublic)]="article.public"
-          [(password)]="article.password"
-          (submitArticle)="submitArticle()">
-        </box-article-edit-submit>
-      </sa-card>
-      <sa-card title="缩略图" baCardClass="with-scroll">
-        <sa-picture-uploader [(ngModel)]="article.thumb"></sa-picture-uploader>
-      </sa-card>
-    </div> -->
+    <div class="col-md-3">
+        <app-card title="分类目录" cardClass="with-scroll">
+            <div class="category-list">
+                <!-- <app-loading-spider [show]="fetching['category']"></app-loading-spider> -->
+                <p class="text-muted" *ngIf="!categories.length; else categoryList">暂无分类</p>
+                <ng-template #categoryList>
+                    <div [title]="category.name" class="category-item-checkbox" *ngFor="let category of categories">
+                        <app-checkbox [(ngModel)]="category.checked">
+                            <span app-checkbox-label>
+                                <span>&nbsp;</span>
+                                <span *ngIf="category.level">└</span>
+                                <strong>{{ ''.padEnd(category.level, '─') }}</strong>
+                                <span>&nbsp;</span>
+                                <span>{{ category.name }}</span>
+                            </span>
+                        </app-checkbox>
+                        <p></p>
+                    </div>
+                </ng-template>
+                <hr>
+                <button class="btn btn-sm btn-default btn-with-icon" (click)="getCategories()" [disabled]="fetching['category']">
+                    <i class="fa fa-refresh"></i>
+                    <span>更新分类</span>
+                </button>
+            </div>
+        </app-card>
+        <app-card title="发布选项" cardClass="with-scroll">
+            <form class="form-horizontal">
+                <div class="form-group row">
+                    <label for="origin" class="col-3 text-center form-control-label">来源</label>
+                    <div class="col-6">
+                        <select class="form-control c-select" id="origin" name="origin" [(ngModel)]="origin">
+                            <option [ngValue]="Origin.Original">原创</option>
+                            <option [ngValue]="Origin.Reprint">转载</option>
+                            <option [ngValue]="Origin.Hybrid">混合</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="state" class="col-3 text-center form-control-label">状态</label>
+                    <div class="col-6">
+                        <select class="form-control c-select" id="state" name="state" [(ngModel)]="state">
+                            <option [ngValue]="PublishState.Published">直接发布</option>
+                            <option [ngValue]="PublishState.Draft">存为草稿</option>
+                            <option [ngValue]="PublishState.Recycle">丢入回收站</option>
+                        </select>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button class="btn btn-block btn-default btn-with-icon"  [disabled]="fetching['article']" (click)="submitArticle()">
+                            <i class="fa fa-check"></i>
+                            <span>{{ is_edit ? '修改' : '发布' }}文章</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </app-card>
+        <!-- <sa-card title="缩略图" baCardClass="with-scroll">
+            <sa-picture-uploader [(ngModel)]="article.thumb"></sa-picture-uploader>
+        </sa-card> -->
+    </div>
 </div>
   

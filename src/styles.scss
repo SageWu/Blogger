@@ -4,6 +4,20 @@
 
 @import "theme/theme.scss";
 
+.editor-toolbar a.fa {
+    color: white !important;
+}
+.editor-toolbar a.fa.active, .editor-toolbar a:hover {
+    color: #007bff !important;
+    background: none !important;
+    border: none !important;
+}
+
+.editor-toolbar.disabled-for-preview a:not(.no-disable) {
+    background: #383838 !important;
+    border: none !important;
+}
+
 @-webkit-keyframes spin {
     0% {
         transform: rotate(0deg); /* Firefox 16+, IE 10+, Opera */

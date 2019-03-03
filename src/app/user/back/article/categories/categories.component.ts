@@ -7,7 +7,7 @@ import { Component, OnInit, ViewChild, TemplateRef } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
-import { formControlStateClass } from "@app/share/component.utils";
+import { formControlStateClass, buildLevelCategories } from "@app/share/component.utils";
 import { Category } from '@app/core/models/category.model';
 import { CategoryService } from '@app/core/services/category.service';
 import { LogService } from '@app/core/services/log.service';
@@ -19,6 +19,7 @@ import { HttpRequestOption } from '@app/interfaces/http.interface';
 })
 export class CategoriesComponent implements OnInit {
     public controlStateClass = formControlStateClass;
+    public buildLevelCategories = buildLevelCategories;
 
     public edit_form: FormGroup;                //编辑表单
 
@@ -119,42 +120,6 @@ export class CategoriesComponent implements OnInit {
         else {
             return false;
         }
-    }
-    
-    //构造分类级别
-    public buildLevelCategories(categories: Category[]): Category[] {
-        let result: Category[] = [];
-
-        //构建树
-        categories.forEach(
-            (category: Category) => {
-                categories.forEach(
-                    (child: Category) => {
-                        if(child.parent_id === category._id) {
-                            category.children = category.children || [];
-                            category.children.push(child);
-                            child["delete"] = true;
-                        }
-                    }
-                );
-            }
-        );
-
-        categories = categories.filter(category => !category["delete"]);
-
-        let flatTree = (parents: Category[], level: number) => {
-            parents.forEach((parent: Category) => {
-                parent.level = level;
-                result.push(parent);
-
-                if(parent.children && parent.children.length) {
-                    flatTree(parent.children, level + 1);
-                }
-            });
-        }
-        flatTree(categories, 0);
-
-        return result;
     }
 
     //获取分类

@@ -12,6 +12,7 @@ import { HttpService } from './services/http.service';
 import { TagService } from './services/tag.service';
 import { LogService } from './services/log.service';
 import { CategoryService } from './services/category.service';
+import { ArticleService } from './services/article.service';
 
 @NgModule({
     imports: [
@@ -19,11 +20,12 @@ import { CategoryService } from './services/category.service';
     ],
     providers: [
         PreloaderService,
-        HttpService,
         LogService,
+        HttpService,
         UserService,
         TagService,
-        CategoryService
+        CategoryService,
+        ArticleService
     ]
 })
 export class CoreModule {}
