@@ -120,6 +120,16 @@ export class HttpService {
         );
     }
 
+    //批量更新
+    public updateMany<T>(api: string, data: T[]): Observable<boolean> {
+        this.checkRequestCondition();
+
+        return this.http.put<HttpResponse<boolean>>(api, data, { headers: this.headers }).pipe(
+            switchMap(this.handleResponse),
+            catchError(this.handleError<boolean>(false))
+        );
+    }
+
     //删除
     public delete(api: string, id: string): Observable<boolean> {
         this.checkRequestCondition();

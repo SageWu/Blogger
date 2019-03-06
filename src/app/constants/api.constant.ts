@@ -22,3 +22,4 @@ export const CATEGORY: string = HOST + "/category";
 export const CATEGORY_ALL: string = HOST + "/category/all";
 
 export const ARTICLE: string = HOST + "/article";
+export const ARTICLE_MANY: string = HOST + "/article/many";

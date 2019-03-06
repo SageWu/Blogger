@@ -66,7 +66,7 @@ export class PostComponent implements OnInit {
         this.getCategories();
         this.initMarkdownEditor();
 
-        let article_id: string = this.route.snapshot.params["article_id"];
+        let article_id: string = this.route.snapshot.queryParams["id"];
         if(article_id) {    //修改文章
             this.is_edit = true;
             this.getArticle(article_id);
@@ -129,12 +129,12 @@ export class PostComponent implements OnInit {
                 this.sme.value(article.content);
                 this.tags.forEach(
                     (tag: Tag) => {
-                        tag["selected"] = article.tags.includes(tag);
+                        tag["selected"] = article.tags.find((value) => tag._id === value._id)? true: false;
                     }
                 );
                 this.categories.forEach(
                     (category: Category) => {
-                        category["checked"] = article.categories.includes(category);
+                        category["checked"] = article.categories.find((value) => category._id === value._id)? true: false;
                     }
                 );
                 this.origin = article.origin;

@@ -140,6 +140,24 @@
 							</ng-template>
 						</tbody>
 					</table>
+					<br>
+					<div class="text-center pagination">
+						<pagination
+							class="pagination-xs"
+							firstText="首页"
+							lastText="末页"
+							nextText="下一页"
+							previousText="上一页"
+							pageBtnClass="btn-primary"
+							[totalItems]="total"
+							[itemsPerPage]="option.page_size"
+							[(ngModel)]="option.page"
+							[maxSize]="7"
+							[boundaryLinks]="true"
+							[rotate]="false"
+							(pageChanged)="pageChanged($event)">
+						</pagination>
+					</div>
 				</div>
 			</div>
 		</app-card>

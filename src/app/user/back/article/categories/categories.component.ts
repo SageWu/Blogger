@@ -208,4 +208,9 @@ export class CategoriesComponent implements OnInit {
             }
         );
     }
+
+    public pageChanged(event): void {
+        this.option.page = event.page;
+        this.refreshCategories();
+    }
 }

@@ -10,5 +10,5 @@ import { Component } from "@angular/core";
     styleUrls: ["./hot.component.scss"]
 })
 export class HotComponent {
-    
+    constructor() {}
 }

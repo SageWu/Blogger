@@ -52,4 +52,19 @@ export class ArticleService {
     public update(article: Article): Observable<Article> {
         return this.httpService.update(API.ARTICLE, article);
     }
+
+    //更新文章状态
+    public updateMany(articles: Article[]): Observable<boolean> {
+        return this.httpService.updateMany<Article>(API.ARTICLE_MANY, articles);
+    }
+
+    //删除文章
+    public delete(article_id: string): Observable<boolean> {
+        return this.httpService.delete(API.ARTICLE, article_id);
+    }
+
+    //批量删除文章
+    public deleteMany(article_ids: string[]): Observable<boolean> {
+        return this.httpService.deleteMany(API.ARTICLE, article_ids);
+    }
 }
