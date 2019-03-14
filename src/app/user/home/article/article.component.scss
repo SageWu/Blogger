@@ -1,0 +1,125 @@
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 16px; /* showing the default */
+    line-height: 1.8;
+}
+
+.article {
+    margin: 0px;
+    background-color: white;
+    
+    /* for mobile */
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 60px;
+    padding-bottom: 90px;
+    /* (shorthand) padding: 60px 30px 90px; */
+}
+
+$blue: #007ee5;
+$gray: #7b8994;
+$darkgray: #3d464d;
+
+
+/* HEADER */
+.category {
+    font-family: 'Montserrat', sans-serif;
+    color: $gray;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1.342em;
+    line-height: 1;
+}
+
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold; /* default */
+    font-size: 2.415em;
+    line-height: 1.2;
+    
+    /*
+    letter-spacing: -1px;
+    color: @blue;
+    padding-bottom: 6px;
+    border-bottom: 2px solid @gray;
+    */
+}
+
+.pub-date {
+    display: block;
+    font-family: 'Open Sans', sans-serif;
+    color: $gray;
+    text-transform: uppercase;
+    font-size: 74.5%; 
+    font-size: 0.745em; /* 74.5% of parent */
+}
+/* END HEADER */
+
+
+/* ARTICLE CONTENT */
+p {
+    /* we did most of the work in the body tag! */
+    margin-bottom: 1em;
+}
+
+h2 {
+    font-size: 1.8rem;
+    line-height: 1;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+h3 {
+    font-size: 1.342rem;
+    line-height: 1;
+    margin-top: 1.8em;
+    margin-bottom: 0.5em;
+}
+
+/* inline vs inline-block; */
+code {
+    display: inline;
+    /* display: inline-block; */
+    vertical-align: baseline;
+    padding-top: 0px;
+    /* padding-bottom: 300px; */
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: whitesmoke;
+    /* background-color: fade(teal, 30%); */
+}
+
+/* What <display> are images ? */
+/* another great default, for your sanity. */
+img {
+    /* display: block; */
+    max-width: 100%;
+}
+
+sup { 
+    font-family: 'Open Sans', sans-serif;
+}
+
+figure {
+    margin: 2em 0 1em;
+    /* what is a float ? */
+    /*
+    float: right;
+    width: 70%;
+    padding: 0;
+    margin-right: -25%;
+    margin-left: 1em;
+    */
+}
+
+figcaption {
+    font-family: 'Open Sans', sans-serif;
+    color: $gray;
+
+    line-height: 1.8em;
+    text-align: center;
+    padding: 0.5em 1em;
+}

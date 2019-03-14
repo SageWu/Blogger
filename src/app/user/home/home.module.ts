@@ -10,12 +10,14 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { HotComponent } from './hot/hot.component';
 import { RecommendComponent } from './recommend/recommend.component';
+import { ArticleComponent } from './article/article.component';
 
 @NgModule({
     declarations: [
         HomeComponent,
         HotComponent,
-        RecommendComponent
+        RecommendComponent,
+        ArticleComponent
     ],
     imports: [
         CommonModule,

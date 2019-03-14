@@ -16,6 +16,7 @@ import { ArticleService } from '@app/core/services/article.service';
 import { LogService } from '@app/core/services/log.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';
+import { HttpRequestOption } from '@app/interfaces/http.interface';
 
 @Component({
     templateUrl: "./articles.component.html",
@@ -33,7 +34,7 @@ export class ArticlesComponent implements OnInit {
     }
     public total: number = 0;               //文章总计
     public search_form: FormGroup;          //搜索表单
-    public option;                          //初始参数
+    public option: HttpRequestOption;       //查询参数
     public tags: Tag[] = [];                //标签
     public categories: Category[] = [];     //目录
     public articles: Article[] = [];        //文章

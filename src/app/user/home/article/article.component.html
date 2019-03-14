@@ -1,0 +1,13 @@
+<article class="article">
+    <header class="header">
+        <h1 class="headline">{{ article?.title }}</h1>
+        <div class="meta">
+            <span class="author">作者 <span class="author-name">{{ article?.user_id.name }}</span></span>
+            <span class="pub-date">发布日期 {{ article?.create_at }}</span>
+        </div>
+    </header>
+
+    <p>
+        {{ article?.content }}
+    </p>
+</article>
