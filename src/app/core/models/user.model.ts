@@ -4,8 +4,15 @@
  */
 
 export interface User {
-    id: string;
+    _id?: string;
     account: string;
+    password?: string;
     name: string;
     email?: string;
+    slogan?: string;
+    avatar?: string;
+    preferences?: string[];
+    last_login?: Date;
+    create_at?: Date;
+    update_at?: Date;
 }

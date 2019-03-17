@@ -11,11 +11,13 @@ import { HomeComponent } from './home.component';
 import { HotComponent } from './hot/hot.component';
 import { RecommendComponent } from './recommend/recommend.component';
 import { ArticleComponent } from './article/article.component';
+import { LatestComponent } from './latest/latest.component';
 
 @NgModule({
     declarations: [
         HomeComponent,
         HotComponent,
+        LatestComponent,
         RecommendComponent,
         ArticleComponent
     ],

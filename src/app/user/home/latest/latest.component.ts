@@ -1,6 +1,6 @@
 /**
- * @file 热门博文组件
- * @module app/user/home/hot/component
+ * @file 最新博文组件
+ * @module app/user/home/latest/component
  */
 
 import { Component, OnInit, OnDestroy } from "@angular/core";
@@ -13,10 +13,10 @@ import { HttpRequestOption } from '@app/interfaces/http.interface';
 import { PublishState, Origin, SortType, Article } from '@app/core/models/article.model';
 
 @Component({
-    templateUrl: "./hot.component.html",
-    styleUrls: ["./hot.component.scss"]
+    templateUrl: "./latest.component.html",
+    styleUrls: ["./latest.component.scss"]
 })
-export class HotComponent implements OnInit, OnDestroy {
+export class LatestComponent implements OnInit, OnDestroy {
     private option: HttpRequestOption;  //查询参数
     public articles: Article[] = [];    //文章列表
     public total: number;               //文章总数
@@ -32,7 +32,14 @@ export class HotComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.option = {
             page: 1,
-            page_size: 10
+            page_size: 10,
+            state: PublishState.Published,
+            origin: Origin.All,
+            sort: SortType.Desc,
+            category: "all",
+            tag: "all",
+            keyword: "",
+            no_back: true
         };
 
         this.getArticles();
@@ -59,9 +66,9 @@ export class HotComponent implements OnInit, OnDestroy {
         }
     }
 
-    //获取热门文章
+    //获取文章
     public getArticles(): void {
-        this.articleService.getHots(this.option).subscribe(
+        this.articleService.get(this.option).subscribe(
             (articles: Article[]) => {
                 this.articles = this.articles.concat(articles);
                 this.total = this.articleService.total;

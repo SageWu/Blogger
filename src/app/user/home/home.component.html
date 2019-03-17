@@ -1,5 +1,5 @@
 <div class="bg"></div>
-<div class="container-fluid" (scroll)="onScroll($event)">
+<div class="container-fluid" (scroll)="onScroll($event)" id="container">
     <header #header>
         <h1 class="logo">Blooger</h1>
     </header>
@@ -7,6 +7,7 @@
     <nav #nav>
         <ul [ngClass]="{ reveal: toggle_menu }">
             <li class="nav-item"><a routerLink="/user/home" >首页</a></li>
+            <li class="nav-item"><a routerLink="/user/home/latest" >最新</a></li>
             <li class="nav-item"><a routerLink="/user/home/recommend" >个性推荐</a></li>
             <li class="nav-item"><a routerLink="/user/back">我的博客</a></li>
             <li class="nav-item"><a href="#" >个人中心</a></li>

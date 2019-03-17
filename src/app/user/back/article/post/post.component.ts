@@ -46,7 +46,7 @@ export class PostComponent implements OnInit {
 
     @ViewChild('simplemde') textarea: ElementRef;   //markdown所使用的textarea
     private sme;                                    //markdown编辑器
-    private renderer = md();                        //渲染markdown
+    private render = md();                        //渲染markdown
 
     constructor(
         private fb: FormBuilder,
@@ -75,7 +75,7 @@ export class PostComponent implements OnInit {
 
     //初始化Markdown编辑器
     private initMarkdownEditor(): void {
-        this.renderer
+        this.render
         .use(mdSub)
         .use(mdSup)
         .use(mdHl);
@@ -86,7 +86,7 @@ export class PostComponent implements OnInit {
                 , "heading-bigger", "heading-1", "heading-2", "heading-3"],
             spellChecker: false,
             previewRender: () => {
-                return this.renderer.render(this.sme.value());
+                return this.render.render(this.sme.value());
             },
             autoDownloadFontAwesome: false  //不自动下载font-awesome样式，在index中已经加入了
         };

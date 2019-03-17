@@ -7,7 +7,12 @@
         </div>
     </header>
 
-    <p>
-        {{ article?.content }}
-    </p>
+    <p [innerHTML]="article?.content"></p>
+
+    <div class="center">
+        <div class="like" (click)="like()" id="like">
+            <i class="fa fa-heart"></i>
+            <i class="outer fa fa-circle-thin"></i>
+        </div>
+    </div>
 </article>

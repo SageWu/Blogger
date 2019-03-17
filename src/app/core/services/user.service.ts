@@ -6,7 +6,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError, map, switchMap } from "rxjs/operators";
+import { catchError, map, switchMap, tap } from "rxjs/operators";
 import { Base64 } from "js-base64";
 
 import * as API from "@app/constants/api.constant";
@@ -57,30 +57,21 @@ export class UserService {
 
     //获取用户信息
     public get(): Observable<User> {
-        this.httpService.checkRequestCondition();
-
-        return this.http.get<HttpResponse<User>>(API.USER, { headers: this.httpService.headers }).pipe(
-            switchMap(this.httpService.handleResponse),
-            map((value: User) => {
-                this.user = value;
-                return value;
-            }),
-            catchError(this.httpService.handleError<User>(null))
+        return this.httpService.getOne<User>(API.USER).pipe(
+            tap((user: User) => {
+                this.user = user
+            })
         );
     }
 
     //创建用户
     public create(account: string, password: string): Observable<User> {
-        this.httpService.checkRequestCondition();
-        let data: Object = {
+        let data: User = {
             account: account,
             password: Base64.encode(password),
             name: account
         };
 
-        return this.http.post<HttpResponse<User>>(API.USER, data, { headers: this.httpService.headers }).pipe(
-            switchMap(this.httpService.handleResponse),
-            catchError(this.httpService.handleError<User>(null))
-        );
+        return this.httpService.create<User>(API.USER, data);
     }
 }

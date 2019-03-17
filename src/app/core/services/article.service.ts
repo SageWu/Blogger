@@ -5,15 +5,12 @@
 
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
-
-
-import * as API from "@app/constants/api.constant";
-import { Article } from '../models/article.model';
-import { HttpService } from './http.service';
-import { HttpRequestOption, PaginationData } from '@app/interfaces/http.interface';
 import { map } from 'rxjs/operators';
 
-
+import * as API from "@app/constants/api.constant";
+import { HttpRequestOption, PaginationData } from '@app/interfaces/http.interface';
+import { Article } from '../models/article.model';
+import { HttpService } from './http.service';
 
 @Injectable()
 export class ArticleService {
@@ -38,9 +35,23 @@ export class ArticleService {
         );
     }
 
+    //获取分页热门文章
+    public getHots(option: HttpRequestOption): Observable<Article[]> {
+        return this.httpService.get<Article>(API.HOT, option).pipe(
+            map(
+                (value: PaginationData<Article[]>) => {
+                    this.total = value.total;
+                    this.current_page = <number>option.page;
+
+                    return value.data;
+                }
+            )
+        );
+    }
+
     //获取单个文章
     public getOne(id: string): Observable<Article> {
-        return this.httpService.getOne(API.ARTICLE, id);
+        return this.httpService.getOne<Article>(API.ARTICLE, id);
     }
 
     //创建文章
@@ -50,7 +61,7 @@ export class ArticleService {
 
     //修改文章
     public update(article: Article): Observable<Article> {
-        return this.httpService.update(API.ARTICLE, article);
+        return this.httpService.update<Article>(API.ARTICLE, article);
     }
 
     //更新文章状态

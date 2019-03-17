@@ -157,7 +157,7 @@
 												<i class="fa fa-trash text-danger" *ngIf="article.state === PublishState.Recycle"></i>
 											</h4>
 											<small class="description">
-												<span *ngIf="article.content">{{ article.content | slice : 0: 128 }}</span>
+												<span *ngIf="article.content">{{ article.content | slice : 0: 128 }}...</span>
 												<span *ngIf="!article.content" class="text-muted">暂无内容</span>
 											</small>
 										</div>

@@ -81,10 +81,14 @@ export class HttpService {
     }
 
     //获取单个数据
-    public getOne<T>(api: string, id: string): Observable<T> {
+    public getOne<T>(api: string, id?: string): Observable<T> {
         this.checkRequestCondition();
 
-        return this.http.get<HttpResponse<T>>(api + "/" + id, { headers: this.headers }).pipe(
+        if(id) {
+            api = api + "/" + id;
+        }
+
+        return this.http.get<HttpResponse<T>>(api, { headers: this.headers }).pipe(
             switchMap(this.handleResponse),
             catchError(this.handleError<T>(null))
         );

@@ -6,9 +6,9 @@ export interface Tag {
     _id?: string;
     name: string;
     description?: string;
-    count: number;
     create_at?: Date;
     update_at?: Date;
 
     user_id: string;
+    count?: number;
 }

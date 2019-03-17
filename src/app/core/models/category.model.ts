@@ -4,16 +4,15 @@
  */
 
 export interface Category {
-    _id: string;
+    _id?: string;
     name: string;
     description?: string;
-    count: number;
-    create_at: Date;
-    update_at: Date;
-
-    parent_id: string;
+    create_at?: Date;
+    update_at?: Date;
+    parent_id?: string;
     user_id: string;
 
+    count?: number;
     children?: Category[];
     level?: number;
 }

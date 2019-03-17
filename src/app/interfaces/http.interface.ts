@@ -26,7 +26,7 @@ export interface PaginationData<T> {
 
 //请求选项
 export interface HttpRequestOption {
-    [key: string]: string | number;
+    [key: string]: any;
 }
 
 //token
