@@ -49,6 +49,20 @@ export class ArticleService {
         );
     }
 
+    //获取分页个性推荐文章
+    public getRecommendations(option: HttpRequestOption): Observable<Article[]> {
+        return this.httpService.get<Article>(API.RECOMMEND, option).pipe(
+            map(
+                (value: PaginationData<Article[]>) => {
+                    this.total = value.total;
+                    this.current_page = <number>option.page;
+
+                    return value.data;
+                }
+            )
+        );
+    }
+
     //获取单个文章
     public getOne(id: string): Observable<Article> {
         return this.httpService.getOne<Article>(API.ARTICLE, id);

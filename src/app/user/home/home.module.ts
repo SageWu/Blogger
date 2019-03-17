@@ -12,6 +12,7 @@ import { HotComponent } from './hot/hot.component';
 import { RecommendComponent } from './recommend/recommend.component';
 import { ArticleComponent } from './article/article.component';
 import { LatestComponent } from './latest/latest.component';
+import { ArticlesComponent } from './articles/articles.component';
 
 @NgModule({
     declarations: [
@@ -19,6 +20,7 @@ import { LatestComponent } from './latest/latest.component';
         HotComponent,
         LatestComponent,
         RecommendComponent,
+        ArticlesComponent,
         ArticleComponent
     ],
     imports: [

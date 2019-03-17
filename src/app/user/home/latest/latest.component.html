@@ -1,7 +1,1 @@
-<section class="c-posts" (scroll)="onScroll($event)">
-    <article class="c-posts__item" *ngFor="let article of articles">
-        <h2>{{ article.title }}</h2>
-        <p>{{ article.content | slice : 0: 60 }}...</p>
-        <p><a (click)="viewArticle(article._id)" class="c-btn">Read More</a></p>
-    </article>
-</section>
+<app-articles [articles]="articles" [total]="total" (nextPage)="onNextPage($event)"></app-articles>

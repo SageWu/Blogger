@@ -33,3 +33,6 @@ export const LOG: string = HOST + "/log";
 
 //热门文章路由
 export const HOT: string = HOST + "/hot";
+
+//个性推荐文章路由
+export const RECOMMEND: string = HOST + "/recommend";
