@@ -7,7 +7,7 @@
     <div class="d-flex info">
         <div class="bg-grey rounded-circle mx-2 flex-shrink-0 d-none d-sm-block"></div>
         <div class="bg-grey rounded-circle mx-2 flex-shrink-0"></div>
-        <img src="https://gravatar.com/avatar/f74602760647a4ddd6fe05075207ace3?s=80&d=https://codepen.io/assets/avatars/user-avatar-80x80-bdcd44a3bfb9a5fd01eb8b86f9e033fa1a9897c3a15b33adfc2649a002dab1b6.png" class="rounded-circle mx-2 flex-shrink-0" />
+        <img src="/assets/img/user.png" class="rounded-circle mx-2 flex-shrink-0" />
     </div>
 </header>
 
@@ -56,14 +56,22 @@
             </div>
 
             <div class="list-group">
-                <div class="group-title pt-2 px-4 mx-1 text-uppercase text-muted">评论管理</div>
-                <a routerLink="./comments" class="list-group-item d-flex align-items-center" routerLinkActive="active">
+                <div class="group-title pt-2 px-4 mx-1 text-uppercase text-muted">消息中心</div>
+                <a routerLink="./message/comments/undefined" class="list-group-item d-flex align-items-center" routerLinkActive="active">
                     <i class="fa fa-comments mr-3"></i>
                     <span class="text-truncate">所有评论</span>
                 </a>
-                <a routerLink="./envelope" class="list-group-item d-flex align-items-center" routerLinkActive="active">
+                <a routerLink="./message/envelope" class="list-group-item d-flex align-items-center" routerLinkActive="active">
                     <i class="fa fa-envelope mr-3"></i>
                     <span class="text-truncate">留言消息</span>
+                </a>
+            </div>
+
+            <div class="list-group">
+                <div class="group-title pt-2 px-4 mx-1 text-uppercase text-muted">其他</div>
+                <a routerLink="../home" class="list-group-item d-flex align-items-center">
+                    <i class="fa fa-sign-out mr-3"></i>
+                    <span class="text-truncate">注销</span>
                 </a>
             </div>
         </div>

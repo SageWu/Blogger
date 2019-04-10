@@ -16,3 +16,35 @@
         </div>
     </div>
 </article>
+
+<div class="comments">
+    <div class="comment-wrap">
+        <div class="photo">
+            <img class="avatar" src="/assets/img/user.png">
+        </div>
+        <div class="comment-block">
+            <form>
+                <textarea #textarea cols="30" rows="3" placeholder="评论..."></textarea>
+            </form>
+            <a class="commit" (click)="comment(textarea.value)">
+                <i class="fa fa-check"></i>&nbsp;提交
+            </a>
+        </div>
+    </div>
+
+    <div class="comment-wrap" *ngFor="let comment of comments">
+        <div class="photo">
+            <img class="avatar" src="/assets/img/user.png" [title]="comment.user_id.name">
+        </div>
+        <div class="comment-block">
+            <p class="comment-text">{{ comment.content }}</p>
+            <div class="bottom-comment">
+                <div class="comment-date">{{ comment.create_at }}</div>
+                <ul class="comment-actions">
+                    <li class="complain">引用</li>
+                    <li class="reply" (click)="reply(comment)">回复</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

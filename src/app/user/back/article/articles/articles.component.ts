@@ -40,20 +40,23 @@ export class ArticlesComponent implements OnInit {
     public articles: Article[] = [];        //文章
 
     public select_all: boolean = false;     //是否全选
-    public selected_articles: string[];     //选择文章id集合
+    public selected_articles: string[];     //选中的文章的id集合
+
     public article_id: string;
     @ViewChild("deleteModal") delete_modal: TemplateRef<any>;
     public modal_ref: BsModalRef;
 
     constructor(
         private fb: FormBuilder,
+        private router: Router,
+        private route: ActivatedRoute,
+        private modalService: BsModalService,
+
         private tagService: TagService,
         private categoryService: CategoryService,
         private articleService: ArticleService,
-        private logService: LogService,
-        private modalService: BsModalService,
-        private router: Router,
-        private route: ActivatedRoute
+        private logService: LogService
+        
     ) {
         this.search_form = this.fb.group({ keyword: ["", Validators.compose([Validators.required])] });
     }
@@ -120,19 +123,14 @@ export class ArticlesComponent implements OnInit {
         );
     }
 
-    //检查文章状态
-    public isState(state: PublishState): boolean {
-        return state === this.option.state;
-    }
-
-    //切换要获取文章的状态
-    public switchState(state: PublishState): void {
-        this.option.state = state;
+    //刷新
+    public refreshArticles(): void {
         this.getArticles();
     }
 
-    //刷新
-    public refreshArticles(): void {
+    //查找文章
+    public searchArticles(): void {
+        this.option.keyword = this.search_form.value["keyword"];
         this.getArticles();
     }
 
@@ -153,9 +151,16 @@ export class ArticlesComponent implements OnInit {
         this.getArticles();
     }
 
-    //查找文章
-    public searchArticles(): void {
-        this.option.keyword = this.search_form.value["keyword"];
+    //检查文章状态
+    public isState(state: PublishState): boolean {
+        return state === this.option.state;
+    }
+
+    //切换要获取文章的状态
+    public switchState(state: PublishState): void {
+        if(state === this.option.state) return;
+
+        this.option.state = state;
         this.getArticles();
     }
 
@@ -200,7 +205,7 @@ export class ArticlesComponent implements OnInit {
                     this.logService.notify("更新失败");
                 }
             }
-        )
+        );
     }
 
     //将文章改为发布状态

@@ -36,3 +36,7 @@ export const HOT: string = HOST + "/hot";
 
 //个性推荐文章路由
 export const RECOMMEND: string = HOST + "/recommend";
+
+//文章评论路由
+export const COMMENT: string = HOST + "/comment";
+export const COMMENT_MANY: string = HOST + "/article/many";

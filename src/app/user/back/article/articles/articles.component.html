@@ -102,7 +102,6 @@
 			
 			<div class="table-responsive">
 				<div class="article-list">
-					<!-- <sa-loading-spider [show]="fetching[Loading.GetList]"></sa-loading-spider> -->
 					<table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
 						<thead class="thead-inverse">
 							<tr>
@@ -126,7 +125,7 @@
 						</thead>
 						<tbody>
 							<tr *ngIf="!articles.length; else articleList">
-								<td colspan="10">
+								<td colspan="9">
 									<p class="text-muted text-center category-err-msg">{{ fetching["article"]? '数据请求中...' : '暂无数据' }}<p>
 								</td>
 							</tr>
@@ -196,7 +195,7 @@
 									</td>
 									<td>
 										<span *ngIf="article.comments_num">
-										<a [routerLink]="['/comment/post/', article.id]">{{ article.comments_num }}条评论</a>
+										<a [routerLink]="['../../message/comments', article._id]">{{ article.comments_num }}条评论</a>
 										</span>
 										<span class="text-muted" *ngIf="!article.comments_num">暂无评论</span>
 									</td>

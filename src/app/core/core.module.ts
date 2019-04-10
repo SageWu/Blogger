@@ -13,6 +13,7 @@ import { TagService } from './services/tag.service';
 import { LogService } from './services/log.service';
 import { CategoryService } from './services/category.service';
 import { ArticleService } from './services/article.service';
+import { CommentService } from './services/comment.service';
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import { ArticleService } from './services/article.service';
         UserService,
         TagService,
         CategoryService,
-        ArticleService
+        ArticleService,
+        CommentService
     ]
 })
 export class CoreModule {}

@@ -13,11 +13,12 @@ import { SettingComponent } from './setting/setting.component';
 
 const user_back_routes: Routes = [
     { path: "", component: BackComponent, children: [
-        { path: "", redirectTo: "article", pathMatch: "full" },
+        { path: "", redirectTo: "dashboard", pathMatch: "full" },
         { path: "dashboard", component: DashboardComponent },
         { path: "announcement", component: AnnouncementComponent },
         { path: "setting", component: SettingComponent },
-        { path: "article", loadChildren: "./article/article.module#ArticleModule" }
+        { path: "article", loadChildren: "./article/article.module#ArticleModule" },
+        { path: "message", loadChildren: "./message/message.module#MessageModule" }
     ] },
 ];
 

@@ -41,7 +41,6 @@ export class LatestComponent implements OnInit {
     public onNextPage(event: Event): void {
         (<number>this.option.page) += 1;
         this.getArticles();
-
     }
 
     //获取文章

@@ -1,0 +1,46 @@
+.comment-search-form {
+	> .input-group {
+		> .form-control {
+			width: 16em;
+		}
+	}
+}
+.comment-list {
+	position: relative;
+
+	.batch-checkbox {
+		text-align: left;
+		padding-left: 2em;
+	}
+
+	.comment-err-msg {
+		margin: 1em 0;
+	}
+
+	tbody {
+		tr {
+			&.comment-item {
+				height: 13em;
+			}
+			td {
+				&.comment-content {
+					line-height: 2;
+					word-break: break-word;
+				}
+				&.comment-user {
+					> .name,
+					> .email,
+					> .site {
+						max-width: 200px;
+						
+					}
+				}
+			}
+		}
+	}
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+}

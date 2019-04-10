@@ -1,0 +1,196 @@
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+		<app-card title="评论列表" baCardClass="with-scroll table-panel">
+			<div class="contnet-top-tools">
+				<div class="pull-left">
+					<div class="btn-group">
+						<button type="button" class="btn btn-default active" [ngClass]="{ 'active': isState(CommentState.All)}" (click)="switchState(CommentState.All)">
+							<span>全部</span>
+							<span *ngIf="isState(CommentState.All)">&nbsp;({{ total }})</span>
+						</button>
+						<button type="button" class="btn btn-default" [ngClass]="{ 'active': isState(CommentState.Published) }" (click)="switchState(CommentState.Published)">
+							<span>已发布</span>
+							<span *ngIf="isState(CommentState.Published)">&nbsp;({{ total }})</span>
+						</button>
+						<button type="button" class="btn btn-default" [ngClass]="{ 'active': isState(CommentState.Spam) }" (click)="switchState(CommentState.Spam)">
+							<span>回收站</span>
+							<span *ngIf="isState(CommentState.Spam)">&nbsp;({{ total }})</span>
+						</button>
+						<button type="button" class="btn btn-default" [ngClass]="{ 'active': isState(CommentState.Deleted) }" (click)="switchState(CommentState.Deleted)">
+							<span>已删除</span>
+							<span *ngIf="isState(CommentState.Deleted)">&nbsp;({{ total }})</span>
+						</button>
+					</div>
+					<span>&nbsp;&nbsp;</span>
+					<div class="btn-group">
+						<button type="button" class="btn btn-default btn-with-icon" (click)="refreshComments()">
+							<i class="fa fa-refresh"></i>
+							<span>刷新</span>
+						</button>
+						<button type="button" class="btn btn-default btn-with-icon" (click)="resetParams()">
+							<i class="fa fa-trash"></i>
+							<span>重置</span>
+						</button>
+						<div class="btn-group dropdown">
+							<button type="button" class="btn btn-default btn-with-icon dropdown-toggle" data-toggle="dropdown">
+								<i class="fa fa-list"></i>
+								<span>批量操作</span>
+							</button>
+							<ul class="dropdown-menu">
+								<li class="dropdown-item">
+									<a (click)="moveToPublished()">设为显示</a>
+								</li>
+								<li class="dropdown-item">
+									<a (click)="moveToSpam()">移至回收站</a>
+								</li>
+								<li class="dropdown-item">
+									<a (click)="moveToDeleted()">彻底删除</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<form class="pull-right form-inline comment-search-form" [formGroup]="search_form" (ngSubmit)="searchComments()">
+					<div class="input-group">
+						<input type="text" formControlName="keyword" class="form-control with-default-addon" placeholder="评论内容、作者名称"/>
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="submit" [disabled]="!search_form.valid">搜索</button>
+						</span>
+					</div>
+				</form>
+				<span class="pull-right">&nbsp;&nbsp;&nbsp;</span>
+				<div class="pull-right form-inline">
+					<select class="form-control c-select" [(ngModel)]="option.sort" (ngModelChange)="getComments()">
+						<option [ngValue]="SortType.Desc" default>最新评论</option>
+						<option [ngValue]="SortType.Asc">最早评论</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="table-responsive">
+				<div class="comment-list">
+					<table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
+						<thead class="thead-inverse">
+							<tr>
+								<th>
+									<app-checkbox [(ngModel)]="select_all" (ngModelChange)="batchSelectChange($event)">
+										<span app-checkbox-label>
+											<span>&nbsp;</span>
+											<strong>ID</strong>
+										</span>
+									</app-checkbox>
+								</th>
+								<!-- <th title="父评论编号">PID</th> -->
+								<th title="文章编号">AID</th>
+								<th width="15%">内容</th>
+								<th>用户信息</th>
+								<th width="15%">终端</th>
+								<th>日期</th>
+								<th>状态</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngIf="!comments.length; else commentsList">
+								<td colspan="9">
+									<p class="text-muted text-center comment-err-msg">
+										<span>{{ fetching["comment"] ? '数据请求中...' : '暂无数据' }}</span>
+									<p>
+								</td>
+							</tr>
+							<ng-template #commentsList>
+								<tr *ngFor="let comment of comments" class="comment-item">
+									<td class="batch-checkbox">
+										<app-checkbox [(ngModel)]="comment.selected" (ngModelChange)="itemSelectChange()">
+											<span app-checkbox-label>
+												<span>&nbsp;</span>
+												<strong>{{ comment._id }}</strong>
+											</span>
+										</app-checkbox>
+									</td>
+									<!-- <td>
+										<a *ngIf="comment.parent_id; else noLinkPid" [routerLink]="['./', comment.parent_id]">{{ comment.parent_id }}</a>
+										<ng-template #noLinkPid><span></span></ng-template>
+									</td> -->
+									<td>
+										<a [routerLink]="['/user/home/article', comment.article_id]">{{ comment.article_id }}</a>
+									</td>
+									<td class="comment-content">
+										<span class="content">
+											<span *ngIf="comment.content;else emptyComment">{{ comment.content | slice : 0: 128 }}</span>
+											<ng-template #emptyComment><span class="text-muted">暂无内容</span></ng-template>
+										</span>
+									</td>
+									<td class="comment-user">
+										<div class="name"><strong>名字：</strong>{{ comment.user_id.name }}</div>
+									</td>
+									<td class="comment-tag">
+										<div>
+											<strong>IP：</strong>
+											<span *ngIf="comment.ip; else unknowip">{{ comment.ip }}</span>
+											<ng-template #unknowip><span class="text-muted">未知</span></ng-template>
+										</div>
+										<div>
+											<strong>位置：</strong>
+											<span *ngIf="comment.location; else unknowIpLocation">{{ comment.location }}</span>
+											<ng-template #unknowIpLocation><span class="text-muted">未知</span></ng-template>
+										</div>
+										<div>
+											<strong>浏览器：</strong>
+											<span *ngIf="comment.agent; else unknowAgent">{{ comment.agent }}</span>
+											<ng-template #unknowAgent><span class="text-muted">未知</span></ng-template>
+										</div>
+									</td>
+									<td>{{ comment.create_at }}</td>
+									<td>
+										<i class="fa fa-check text-success" *ngIf="comment.state === CommentState.Published"></i>
+										<i class="fa fa-trash text-danger" *ngIf="comment.state === CommentState.Spam"></i>
+										<i class="fa fa-ban text-danger" *ngIf="comment.state === CommentState.Deleted"></i>
+										<span>&nbsp;</span>
+										<span [ngSwitch]="comment.state">
+											<span *ngSwitchCase="CommentState.Published">显示</span>
+											<span *ngSwitchCase="CommentState.Spam">垃圾评论</span>
+											<span *ngSwitchCase="CommentState.Deleted">已删除</span>
+										</span>
+									</td>
+									<td>
+										<div class="button-wrapper">
+											<a class="btn btn-success btn-sm">详情</a>
+										</div>
+										<div class="button-wrapper" *ngIf="comment.state === CommentState.Deleted || comment.state === CommentState.Spam">
+											<button class="btn btn-warning btn-sm" (click)="moveToPublished(comment._id)">恢复评论</button>
+										</div>
+										<div class="button-wrapper" *ngIf="comment.state === CommentState.Published">
+											<button class="btn btn-danger btn-sm" (click)="moveToSpam(comment._id)">回收站</button>
+										</div>
+										<div class="button-wrapper" *ngIf="comment.state === CommentState.Spam">
+											<button class="btn btn-danger btn-sm" (click)="moveToDeleted(comment._id)">彻底删除</button>
+										</div>
+									</td>
+								</tr>
+							</ng-template>
+						</tbody>
+					</table>
+					<br>
+					<div class="text-center pagination">
+						<pagination
+							class="pagination-xs"
+							firstText="首页"
+							lastText="末页"
+							nextText="下一页"
+							previousText="上一页"
+							pageBtnClass="btn-primary"
+							[totalItems]="total"
+							[itemsPerPage]="option.page_size"
+							[(ngModel)]="option.page"
+							[maxSize]="7"
+							[boundaryLinks]="true"
+							[rotate]="false"
+							(pageChanged)="pageChanged($event)">
+						</pagination>
+					</div>
+				</div>
+			</div>
+		</app-card>
+    </div>
+</div>

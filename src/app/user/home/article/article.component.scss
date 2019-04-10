@@ -129,17 +129,17 @@ figcaption {
 
 .center {
     width: 100%;
-    position: relative;
+    
     height: 60px;
 }
 .like {
+    position: relative;
     font-size: 23px;
     width: 60px;
     height: 60px;
     text-align: center;
     cursor: pointer;
-    left: 0px;
-    right: 0px;
+    margin: 0px auto;
 }
 .like i {
     position: absolute;
@@ -168,4 +168,100 @@ figcaption {
 }
 .active .outer {
     color: rgb(73, 73, 73);
+}
+
+
+$ptsans: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
+$placeholder: #ced2db;
+$text-color: #555f77;
+$links: #0095ff;
+input, textarea {
+    outline: none;
+    border: none;
+    display: block;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    font-family: $ptsans;
+    font-size: 16px;
+    color: $text-color;
+}
+p {
+    line-height: 21px;
+}
+.comments {
+    margin: 35px auto 0;
+}
+.comment-wrap {
+    margin-bottom: 20px;
+    display: table;
+    width: 100%;
+    min-height: 85px;
+}
+.photo {
+    padding-top: 10px;
+    padding-right: 10px;
+    display: table-cell;
+    width: 56px;
+  
+    .avatar {
+        border-radius: 50%;
+    }
+}
+.comment-block {
+    padding: 16px;
+    background-color: #fff;
+    display: table-cell;
+    vertical-align: top;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.08);
+    position: relative;
+  
+    textarea {
+        width: 100%;
+        resize: none;
+    }
+
+    .commit {
+        position: absolute;
+        right: 15px;
+        bottom: 10px;
+        color: #acb4c2;
+        cursor: pointer;
+    }
+    .commit:hover {
+        color: #007ee5;
+    }
+}
+.comment-text {
+    margin-bottom: 20px;
+}
+.bottom-comment {
+    color: #acb4c2;
+    font-size: 14px;
+}
+.comment-date {
+    float: left;
+}
+.comment-actions {
+    float: right;
+    margin-bottom: 0px;
+    
+    li {
+        display: inline;
+        margin: -2px;
+        cursor: pointer;
+        
+        &.complain {
+            padding-right: 12px;
+            border-right: 1px solid #e1e5eb;
+        }
+        &.reply {
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+        &:hover {
+            color: $links;
+        }
+    }
 }
