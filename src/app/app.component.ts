@@ -11,8 +11,8 @@ export class AppComponent implements AfterViewInit {
 	) {}
 
 	ngAfterViewInit() {
-		setTimeout(() => {
-			this.preloader.stop();
-		}, 1000);
+		// setTimeout(() => {
+		// 	this.preloader.stop();
+		// }, 1000);
 	}
 }

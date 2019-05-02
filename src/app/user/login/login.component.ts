@@ -43,6 +43,9 @@ export class LoginComponent {
     ];
     @ViewChild("terminalBody") terminal_ref: ElementRef;
 
+    private canvas: HTMLCanvasElement;
+    private dropdownImages: any[] = [];
+
     constructor(
         private userService: UserService,
         private router: Router
@@ -125,9 +128,80 @@ export class LoginComponent {
         else if(command === "help") {
             this.messages.push("XD hahaha", "you@robot:~$ ");
         }
+        else if(command === "gg") {
+            this.canvas = document.querySelector("#canvas");
+            this.canvas.height = this.canvas.clientHeight;
+            this.canvas.width = this.canvas.clientWidth;
+            for(let i = 1; i < 62; i++) {
+                setTimeout(() => {
+                    this.dropdownImages.push(this.dropdownImage(this.canvas, `/assets/img/jk2/${i}.jpg`));
+                }, 1000 * i);
+            }
+            this.loop();
+            this.messages.push("XD hahaha", "you@robot:~$ ");
+        }
         else {
             this.messages.push("Please enter proper command.", "you@robot:~$ ");
         }
+    }
+
+    private loop() {
+        this.canvas.getContext("2d").clearRect(0, 0, this.canvas.clientWidth, this.canvas.clientHeight);
+        this.dropdownImages.forEach((value: any) => {
+            value.draw();
+        });
+        let count: number = 0;
+        this.dropdownImages.forEach((value: any) => {
+            value.update();
+            if(value.params.hidden) {
+                count++;
+            }
+        });
+        if(this.dropdownImages.length > 0 && count === this.dropdownImages.length) {
+            this.canvas.remove();
+            return;
+        }
+
+        requestAnimationFrame(this.loop.bind(this));
+    }
+
+    private dropdownImage(canvas: HTMLCanvasElement, src: string): any {
+        let params: any = {
+            x: Math.round((Math.random() * canvas.clientWidth)),
+            y: 0,
+            speed: 0.5,
+            wind: Math.random() * 2 - 1,
+            hidden: false
+        };
+        let context: CanvasRenderingContext2D = canvas.getContext("2d");
+        let image = new Image();
+        image.src = src;
+
+        let draw = () => {
+            if(params.hidden) return;
+            context.drawImage(image, params.x, params.y, 500, 300);
+        }
+        let translate = () => {
+            params.y += params.speed;
+            params.x += params.wind;
+        }
+        let onDown = () => {
+            if(params.y < canvas.clientHeight) return;
+            params.hidden = true;
+            // params.x = Math.round((Math.random() * canvas.clientWidth));
+            // params.y = 0;
+        }
+        let update = () => {
+            if(params.hidden) return;
+            translate();
+            onDown();
+        }
+
+        return {
+            update,
+            draw,
+            params
+        };
     }
 
     //返回命令模式
